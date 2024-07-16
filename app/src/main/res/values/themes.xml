@@ -4,7 +4,4 @@
     </style>
 
     <style name="Theme.TargetScoreCounter" parent="Base.Theme.TargetScoreCounter" />
-
-    <style name="resultEntryScoreEntry">
-    </style>
 </resources>

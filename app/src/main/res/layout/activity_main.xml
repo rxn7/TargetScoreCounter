@@ -37,7 +37,7 @@
 
             <Button
                 android:id="@+id/keyboard_1"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/keyboardButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -46,7 +46,7 @@
 
             <Button
                 android:id="@+id/keyboard_2"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/keyboardButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -55,7 +55,7 @@
 
             <Button
                 android:id="@+id/keyboard_3"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/keyboardButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -64,7 +64,7 @@
 
             <Button
                 android:id="@+id/keyboard_4"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/keyboardButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -73,7 +73,7 @@
 
             <Button
                 android:id="@+id/keyboard_5"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/keyboardButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -82,7 +82,7 @@
 
             <ImageButton
                 android:id="@+id/keyboard_remove"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/keyboardButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -103,7 +103,7 @@
 
             <Button
                 android:id="@+id/keyboard_6"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/keyboardButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -112,7 +112,7 @@
 
             <Button
                 android:id="@+id/keyboard_7"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/keyboardButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -121,7 +121,7 @@
 
             <Button
                 android:id="@+id/keyboard_8"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/keyboardButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -130,7 +130,7 @@
 
             <Button
                 android:id="@+id/keyboard_9"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/keyboardButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -139,7 +139,7 @@
 
             <Button
                 android:id="@+id/keyboard_10"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/keyboardButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -148,7 +148,7 @@
 
             <ImageButton
                 android:id="@+id/keyboard_submit"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/keyboardButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

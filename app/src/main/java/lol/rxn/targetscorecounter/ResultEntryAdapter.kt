@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import androidx.core.text.toSpannable
+import android.animation.ArgbEvaluator
 
 class ResultEntryAdapter(private val ctx: Context, private val results: ArrayList<ResultData>) : BaseAdapter() {
     override fun getCount(): Int {
@@ -31,7 +32,7 @@ class ResultEntryAdapter(private val ctx: Context, private val results: ArrayLis
         val scoresText: TextView = view.findViewById(R.id.scores)
 
         val textBuilder = SpannableStringBuilder()
-        var total = 0
+        var total = 0 // NOTE: Total is not calculated using result.getTotalScore() to not iterate twice
         for (score in result.scores) {
             total += score
 
@@ -42,11 +43,7 @@ class ResultEntryAdapter(private val ctx: Context, private val results: ArrayLis
                 textBuilder.append(' ')
             }
 
-            val colorSpan: ForegroundColorSpan = when {
-                score >= 8 -> ForegroundColorSpan(Color.rgb(0, 200, 0))
-                score >= 5 -> ForegroundColorSpan(Color.rgb(255, 200, 0))
-                else -> ForegroundColorSpan(Color.rgb(240, 0, 0))
-            }
+            val colorSpan = ForegroundColorSpan(Colors.getGradient(score, 10))
 
             val len: Int = textBuilder.count()
             textBuilder.setSpan(colorSpan, len - 3, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -56,6 +53,8 @@ class ResultEntryAdapter(private val ctx: Context, private val results: ArrayLis
         scoresText.text = textBuilder.toSpannable()
 
         val totalScoreText: TextView = view.findViewById(R.id.score_total)
+        totalScoreText.setTextColor(Colors.getGradient(total, result.getMaxPossibleScore()))
+
         totalScoreText.text = "$total"
 
         return view

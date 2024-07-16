@@ -1,6 +1,6 @@
 package lol.rxn.targetscorecounter
 
-data class ResultData(val scores: Array<Int>) {
+data class ResultData(var scores: ArrayList<Int>) {
     fun getTotalScore(): Int {
         return scores.sum()
     }
@@ -10,6 +10,6 @@ data class ResultData(val scores: Array<Int>) {
     }
 
     override fun hashCode(): Int {
-        return scores.contentHashCode()
+        return scores.hashCode()
     }
 }
