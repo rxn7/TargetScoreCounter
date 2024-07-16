@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lol.rxn.targetscorecounter.ResultEntry xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="12">
+
+    <TextView
+        android:fontFamily="monospace"
+        android:layout_weight="1.5"
+        android:id="@+id/scores"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="10 10 10 10 10 10 10 10 10 10"
+        android:textSize="19dp" />
+
+    <TextView
+        android:id="@+id/score_total"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="10.5"
+        android:text="100"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+</lol.rxn.targetscorecounter.ResultEntry>
