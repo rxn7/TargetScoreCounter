@@ -1,6 +1,8 @@
 package lol.rxn.targetscorecounter
 
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -10,23 +12,40 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var resultsAdapter: ResultEntryAdapter
     private var results: ArrayList<ResultData> = ArrayList()
-    private lateinit var currentEntry: ResultData
+
+    private var currentEntry: ResultData = ResultData(arrayListOf())
+    private var currentEntryPosition: Int
+        get() = results.indexOf(currentEntry)
+        set(idx) {
+            resultsAdapter.currentEntryPosition = idx
+            currentEntry = results[idx]
+            binding.resultsList.invalidateViews()
+            binding.resultsList.setSelection(idx)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.resultsList.setOnItemClickListener { _: AdapterView<*>, _: View, idx: Int, _: Long ->
+            currentEntryPosition = idx
+        }
+
+        binding.resultsList.setOnItemLongClickListener { _: AdapterView<*>, _: View, idx: Int, _: Long ->
+            removeEntry(idx)
+            true
+        }
+
         initKeyboard()
 
-        currentEntry = ResultData(arrayListOf())
         results.add(currentEntry)
-
         resultsAdapter = ResultEntryAdapter(this, results)
         binding.resultsList.adapter = resultsAdapter
+
+        currentEntryPosition = 0
     }
 
     private fun initKeyboard() {
@@ -38,20 +57,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.keyboardRemove.setOnClickListener { removeLastScore() }
-        binding.keyboardRemove.setOnLongClickListener { removeLastResultEntry() }
         binding.keyboardSubmit.setOnClickListener { submitCurrentEntry() }
     }
 
     private fun addScoreToCurrentEntry(value: Int) {
-        if(results.isEmpty()) {
-            results.add(ResultData(arrayListOf()))
-        }
-
-        val currentEntry: ResultData = results.last()
         currentEntry.scores.add(value)
-
         resultsAdapter.notifyDataSetChanged()
-        focusOnCurrentEntry()
     }
 
     private fun removeLastScore() {
@@ -59,34 +70,26 @@ class MainActivity : AppCompatActivity() {
 
         if(currentEntry.scores.isEmpty() && results.count() > 1) {
             results.remove(currentEntry)
-            currentEntry = results.last()
+            currentEntryPosition = results.lastIndex
         }
 
         resultsAdapter.notifyDataSetChanged()
-        focusOnCurrentEntry()
     }
 
-    private fun removeLastResultEntry(): Boolean {
+    private fun removeEntry(position: Int) {
         if(results.count() == 1) {
             currentEntry.scores.clear()
         } else {
-            results.remove(currentEntry)
-            currentEntry = results.last()
+            results.removeAt(position)
+            resultsAdapter.notifyDataSetChanged()
+            currentEntryPosition = position.coerceIn(0..results.lastIndex)
         }
-
-        resultsAdapter.notifyDataSetChanged()
-        focusOnCurrentEntry()
-        return true
     }
 
     private fun submitCurrentEntry() {
-        currentEntry = ResultData(arrayListOf())
-        results.add(currentEntry)
-        resultsAdapter.notifyDataSetChanged()
-        focusOnCurrentEntry()
-    }
+        results.add(ResultData(arrayListOf()))
+        currentEntryPosition = results.lastIndex
 
-    private fun focusOnCurrentEntry() {
-        binding.resultsList.setSelection(resultsAdapter.count - 1)
+        resultsAdapter.notifyDataSetChanged()
     }
 }

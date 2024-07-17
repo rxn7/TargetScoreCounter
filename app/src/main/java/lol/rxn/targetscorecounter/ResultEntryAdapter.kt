@@ -11,9 +11,10 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import androidx.core.text.toSpannable
-import android.animation.ArgbEvaluator
 
 class ResultEntryAdapter(private val ctx: Context, private val results: ArrayList<ResultData>) : BaseAdapter() {
+    var currentEntryPosition: Int = 0
+
     override fun getCount(): Int {
         return results.size
     }
@@ -28,6 +29,13 @@ class ResultEntryAdapter(private val ctx: Context, private val results: ArrayLis
 
     override fun getView(idx: Int, v: View?, parent: ViewGroup?): View {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.result_entry, parent, false)
+
+        if (currentEntryPosition == idx) {
+            view.setBackgroundColor(Color.rgb(240, 240, 240))
+        } else {
+            view.setBackgroundColor(Color.WHITE)
+        }
+
         val result: ResultData = getItem(idx)
         val scoresText: TextView = view.findViewById(R.id.scores)
 
