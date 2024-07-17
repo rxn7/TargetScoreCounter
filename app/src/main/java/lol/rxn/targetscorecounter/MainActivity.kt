@@ -1,11 +1,15 @@
 package lol.rxn.targetscorecounter
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import lol.rxn.targetscorecounter.adapters.ResultEntryAdapter
+import lol.rxn.targetscorecounter.data.ResultData
 import lol.rxn.targetscorecounter.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         set(idx) {
             resultsAdapter.currentEntryPosition = idx
             currentEntry = results[idx]
-            binding.resultsList.invalidateViews()
+            binding.resultsList.invalidateViews() // TODO: Invalidating all views just to change the background color is slow
             binding.resultsList.setSelection(idx)
         }
 
@@ -27,20 +31,29 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
+        initBinding()
+        initResultsAdapter()
+        initResultsList()
+        initKeyboard()
+    }
+
+    private fun initBinding() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
 
+    private fun initResultsList() {
         binding.resultsList.setOnItemClickListener { _: AdapterView<*>, _: View, idx: Int, _: Long ->
             currentEntryPosition = idx
         }
 
         binding.resultsList.setOnItemLongClickListener { _: AdapterView<*>, _: View, idx: Int, _: Long ->
-            removeEntry(idx)
+            showRemoveEntryDialog(idx)
             true
         }
+    }
 
-        initKeyboard()
-
+    private fun initResultsAdapter() {
         results.add(currentEntry)
         resultsAdapter = ResultEntryAdapter(this, results)
         binding.resultsList.adapter = resultsAdapter
@@ -76,13 +89,13 @@ class MainActivity : AppCompatActivity() {
         resultsAdapter.notifyDataSetChanged()
     }
 
-    private fun removeEntry(position: Int) {
+    private fun removeEntry(idx: Int) {
         if(results.count() == 1) {
             currentEntry.scores.clear()
         } else {
-            results.removeAt(position)
+            results.removeAt(idx)
             resultsAdapter.notifyDataSetChanged()
-            currentEntryPosition = position.coerceIn(0..results.lastIndex)
+            currentEntryPosition = idx.coerceIn(0..results.lastIndex)
         }
     }
 
@@ -91,5 +104,19 @@ class MainActivity : AppCompatActivity() {
         currentEntryPosition = results.lastIndex
 
         resultsAdapter.notifyDataSetChanged()
+    }
+
+    private fun showRemoveEntryDialog(idx: Int) {
+        currentEntryPosition = idx
+
+        AlertDialog.Builder(this)
+            .setTitle("Delete entry?")
+            .setMessage("Are you sure you want to delete this entry?")
+            .setPositiveButton(android.R.string.yes) { _: DialogInterface, _: Int ->
+                removeEntry(idx)
+            }
+            .setNegativeButton(android.R.string.no, null)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .show()
     }
 }
