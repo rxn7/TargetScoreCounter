@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import lol.rxn.targetscorecounter.adapters.ResultEntryAdapter
 import lol.rxn.targetscorecounter.data.ResultData
 import lol.rxn.targetscorecounter.databinding.ActivityMainBinding
+import lol.rxn.targetscorecounter.extensions.Color
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -65,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         val buttons: Array<Button> = arrayOf(binding.keyboard1, binding.keyboard2, binding.keyboard3, binding.keyboard4, binding.keyboard5, binding.keyboard6, binding.keyboard7, binding.keyboard8, binding.keyboard9, binding.keyboard10)
         for(i in 1..10) {
             val btn: Button = buttons[i - 1]
-            btn.setTextColor(Colors.getGradient(i, 10))
+            btn.setTextColor(Color.gradient(i, 10))
             btn.setOnClickListener { addScoreToCurrentEntry(i) }
         }
 
